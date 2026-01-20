@@ -3,88 +3,192 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>나를 소개합니다</title>
+  <title>한양대학교 융합전자공학부 | 포트폴리오</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
-      background: linear-gradient(180deg, #fdfbfb, #ebedee);
-      color: #333;
-    }
-    .container {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 80px 24px;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-    }
-    h2 {
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: #666;
-      margin-bottom: 2rem;
-    }
-    section {
-      margin-bottom: 3rem;
-    }
-    .card {
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    }
-    ul {
-      padding-left: 1.2rem;
-    }
-    li {
-      margin-bottom: 0.5rem;
-    }
-    footer {
-      text-align: center;
-      font-size: 0.9rem;
-      color: #888;
-      margin-top: 4rem;
-    }
+    body { margin:0; font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif; background:#f4f6f8; color:#222; }
+    .container { max-width:800px; margin:0 auto; padding:80px 24px; }
+
+    /* Header */
+    header { padding-bottom:32px; margin-bottom:48px; border-bottom:1px solid #e5e7eb; }
+    h1 { font-size:2.6rem; margin-bottom:0.5rem; }
+    h2 { font-weight:400; color:#666; margin-bottom:0; }
+
+    /* Section titles */
+    h3 { margin-bottom:1.5rem; font-size:1.4rem; position:relative; padding-left:14px; }
+    h3::before { content:''; position:absolute; left:0; top:4px; width:5px; height:1.2em; background:#222; border-radius:3px; }
+
+    section { margin-bottom:3.5rem; }
+    .card { background:#fff; border-radius:18px; padding:28px; box-shadow:0 12px 30px rgba(0,0,0,0.06); }
+
+    /* Layout */
+    .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+
+    /* Buttons */
+    button { padding:12px; border-radius:12px; border:none; background:#eee; cursor:pointer; transition:all 0.2s ease; }
+    button:hover { background:#ddd; transform:translateY(-1px); }
+    button.active { background:#222; color:#fff; }
+
+    /* Content box */
+    .content-box { margin-top:18px; padding:20px; background:#f9f9f9; border-radius:14px; display:none; line-height:1.6; opacity:0; transform:translateY(-6px); transition:all 0.25s ease; }
+    .content-box.show { display:block; opacity:1; transform:translateY(0); }
+
+    /* Tags */
+    .tag { display:inline-block; background:#e0e0e0; padding:4px 8px; border-radius:8px; font-size:0.8rem; margin-right:6px; margin-top:6px; }
+
+    /* Projects */
+    .project { padding:14px 16px; border-radius:12px; background:#fafafa; border:1px solid #e5e7eb; margin-bottom:12px; cursor:pointer; transition:background 0.2s ease; }
+    .project:hover { background:#f0f0f0; }
+    .project.hidden { display:none; }
+
+    footer { text-align:center; color:#888; margin-top:4rem; font-size:0.9rem; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>안녕하세요, 👋</h1>
-      <h2>OO대학교 OO학과에 재학 중인 OOO입니다.</h2>
-    </header>
+<div class="container">
+  <header style="display:flex; align-items:center; gap:20px;">
+    <img src="hanyang_logo.png" alt="한양대학교 로고" style="width:72px; height:auto;" />
+    <div>
+      <h1>Hanyang University<br/>Department of Electronic Engineering</h1>
+      <h2>한양대학교 융합전자공학부<br/>배운 것을 설계와 결과로 남기는 전공자 이승민</h2>
+    </div>
+  </header>
 
-    <section class="card">
-      <h3>나에 대해</h3>
-      <p>
-        저는 새로운 경험을 좋아하고, 사람들과 함께 무언가를 만들어가는 과정을 즐깁니다.
-        대학 생활 속에서 다양한 활동을 하며 스스로를 알아가고 있습니다.
-      </p>
-    </section>
+  <!-- 전공 -->
+  <section class="card">
+    <h3>전공 과목</h3>
+    <div class="grid" id="year-buttons" style="margin-bottom:28px;">
+      <button onclick="selectYear('y2', this)">2학년</button>
+      <button onclick="selectYear('y3', this)">3학년</button>
+      <button onclick="selectYear('y4', this)">4학년</button>
+    </div>
+    <div class="grid" id="subject-buttons" style="row-gap:18px; margin-top:12px;"></div>
+    <div id="subject-content" class="content-box"></div>
+  </section>
 
-    <section class="card">
-      <h3>전공</h3>
-      <p>OO대학교 OO학과</p>
-    </section>
+  
 
-    <section class="card">
-      <h3>동아리 / 활동</h3>
-      <ul>
-        <li>📌 OO 동아리 – 활동 내용 한 줄 설명</li>
-        <li>📌 OO 프로젝트 / 행사 – 간단한 역할 설명</li>
-      </ul>
-    </section>
+  <!-- 프로젝트 -->
+  <section class="card">
+    <h3>프로젝트 (과목 연계)</h3>
+    <div id="projects"></div>
+    <div id="project-detail" class="content-box"></div>
+  </section>
 
-    <section class="card">
-      <h3>관심사</h3>
-      <p>#키워드 #키워드 #키워드</p>
-    </section>
+  <!-- 동아리 -->
+  <section class="card">
+    <h3>동아리 활동</h3>
+    <p><strong>중앙 동아리 클래식 기타 동아리</strong></p>
+    <p>부회장으로 활동하며 정기 연습 및 공연 기획, 신입 부원 교육과 동아리 운영을 담당했습니다. 음악 활동을 통해 꾸준함과 팀워크, 리더십을 기를 수 있었습니다.</p>
+  </section>
 
-    <footer>
-      © 2026 OOO
-    </footer>
-  </div>
+  <footer>© 2026 이승민</footer>
+</div>
+
+<script>
+const data = {
+  y2: {
+    '회로이론': { desc:'저항·커패시터·인덕터 기반 회로 해석과 기본 회로 해법을 학습', project:null },
+    '전자기학': { desc:'전기장과 자기장, 맥스웰 방정식을 중심으로 전자기 현상을 이해', project:null },
+    '논리회로': { desc:'불 대수 기반의 조합논리·순차논리 회로 설계 능력 습득', project:null },
+    '공학수학': { desc:'미분방정식, 라플라스 변환 등 전자공학 수학적 기초 정립', project:null },
+    '프로그래밍기초': { desc:'C 언어를 활용한 공학 문제 해결 및 알고리즘 기초', project:'mcu' },
+    '신호와시스템': { desc:'연속·이산 신호 및 시스템의 시간/주파수 영역 해석', project:'fft' },
+    '반도체소자': { desc:'다이오드, MOSFET 등 반도체 소자의 물리적 동작 원리 이해', project:null },
+    '융합전자설계입문': { desc:'기초 전자 시스템을 설계하며 HW/SW 통합 경험', project:'mcu' }
+  },
+  y3: {
+    '전자회로': { desc:'아날로그 증폭기 및 회로 해석과 설계', project:null },
+    '디지털신호처리': { desc:'FFT, 필터 설계를 통한 신호 처리 기법 학습', project:'fft' },
+    '마이크로프로세서': { desc:'MCU 구조 이해 및 펌웨어 기반 제어 구현', project:'mcu' },
+    '통신시스템': { desc:'아날로그 및 디지털 통신 시스템의 기본 원리', project:null },
+    '반도체공학': { desc:'반도체 공정 및 집적회로 제조 기술 이해', project:null },
+    '랜덤프로세스': { desc:'확률 변수와 잡음 모델을 통한 시스템 분석', project:null },
+    '전자기학응용': { desc:'전자기 이론의 실제 공학 문제 적용', project:null },
+    '컴퓨터구조': { desc:'CPU, 메모리, 명령어 처리 구조 이해', project:null }
+  },
+  y4: {
+    '제어공학': { desc:'PID 제어 및 안정도 분석을 통한 시스템 제어', project:'pid' },
+    '임베디드시스템': { desc:'HW/SW 통합 임베디드 시스템 설계', project:'mcu' },
+    'VLSI공학': { desc:'집적회로 설계 흐름과 레이아웃 이해', project:null },
+    '아날로그회로설계': { desc:'고성능 아날로그 회로 설계 기법 학습', project:null },
+    '디지털통신': { desc:'변조 방식과 채널 특성 분석', project:null },
+    '광전자공학': { desc:'광소자 및 광통신 응용 이해', project:null },
+    '캡스톤디자인': { desc:'팀 기반 종합 시스템 설계 프로젝트 수행', project:'capstone' },
+    '졸업프로젝트': { desc:'전자공학 전공 지식을 집약한 최종 프로젝트', project:'capstone' }
+  }
+};
+
+const projects = {
+  fft: {
+    title:'FFT 기반 소리 분석 (2학년)',
+    detail:'마이크 입력 신호를 FFT로 변환하여 주파수 성분을 분석하고, 소리별 스펙트럼 차이를 시각적으로 비교했습니다.',
+    tags:['신호와시스템','DSP','MATLAB']
+  },
+  mcu: {
+    title:'MCU 센서 제어 시스템 (2학년)',
+    detail:'Arduino/STM32 기반으로 온도·조도 센서를 읽고 조건에 따라 LED 및 액추에이터를 제어하는 시스템을 구현했습니다.',
+    tags:['임베디드','MCU','C']
+  },
+  filter: {
+    title:'디지털 필터 설계 (3학년)',
+    detail:'FIR/IIR 필터를 설계하고 주파수 응답을 비교 분석하여 신호 특성에 따른 필터 효과를 확인했습니다.',
+    tags:['DSP','필터','MATLAB']
+  },
+  cpu: {
+    title:'간단한 CPU / ALU 설계 (3학년)',
+    detail:'Logisim을 이용해 ALU와 레지스터를 포함한 간단한 CPU 구조를 설계하고 기본 명령을 시뮬레이션했습니다.',
+    tags:['논리회로','컴퓨터구조','Logisim']
+  },
+  pid: {
+    title:'PID 제어 시뮬레이션 (4학년)',
+    detail:'PID 파라미터 변화에 따른 시스템 응답을 분석하여 안정도와 응답 특성을 비교했습니다.',
+    tags:['제어공학','PID','MATLAB']
+  },
+  embedded: {
+    title:'임베디드 통합 시스템 (4학년)',
+    detail:'MCU, 센서, 제어 로직을 통합한 임베디드 시스템을 설계하고 단계적으로 기능을 확장했습니다.',
+    tags:['임베디드','시스템','프로젝트']
+  }
+};
+
+function renderProjects(filterKey=null){
+  const box=document.getElementById('projects');
+  box.innerHTML='';
+  Object.entries(projects).forEach(([k,v])=>{
+    const d=document.createElement('div');
+    d.className='project'+(filterKey&&k!==filterKey?' hidden':'');
+    d.innerHTML=`<strong>${v.title}</strong><br/><span class='tag'>${v.tags.join('</span><span class="tag">')}</span>`;
+    d.onclick=()=>showProject(v);
+    box.appendChild(d);
+  });
+}
+
+function showProject(p){
+  const d=document.getElementById('project-detail');
+  d.innerHTML=`<strong>${p.title}</strong><br/><br/>${p.detail}`;
+  d.classList.add('show');
+}
+
+window.selectYear=function(y,btn){
+  document.querySelectorAll('#year-buttons button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const sb=document.getElementById('subject-buttons'); sb.innerHTML='';
+  Object.keys(data[y]).forEach(s=>{
+    const b=document.createElement('button'); b.innerText=s;
+    b.onclick=()=>showSubject(y,s,b);
+    sb.appendChild(b);
+  });
+};
+
+window.showSubject=function(y,s,btn){
+  document.querySelectorAll('#subject-buttons button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const c=document.getElementById('subject-content');
+  c.innerHTML=data[y][s].desc; c.classList.add('show');
+  renderProjects(data[y][s].project);
+};
+
+renderProjects();
+</script>
 </body>
 </html>
