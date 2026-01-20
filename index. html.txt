@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>나를 소개합니다</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background: linear-gradient(180deg, #fdfbfb, #ebedee);
+      color: #333;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+    section {
+      margin-bottom: 3rem;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    ul {
+      padding-left: 1.2rem;
+    }
+    li {
+      margin-bottom: 0.5rem;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #888;
+      margin-top: 4rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>안녕하세요, 👋</h1>
+      <h2>OO대학교 OO학과에 재학 중인 OOO입니다.</h2>
+    </header>
+
+    <section class="card">
+      <h3>나에 대해</h3>
+      <p>
+        저는 새로운 경험을 좋아하고, 사람들과 함께 무언가를 만들어가는 과정을 즐깁니다.
+        대학 생활 속에서 다양한 활동을 하며 스스로를 알아가고 있습니다.
+      </p>
+    </section>
+
+    <section class="card">
+      <h3>전공</h3>
+      <p>OO대학교 OO학과</p>
+    </section>
+
+    <section class="card">
+      <h3>동아리 / 활동</h3>
+      <ul>
+        <li>📌 OO 동아리 – 활동 내용 한 줄 설명</li>
+        <li>📌 OO 프로젝트 / 행사 – 간단한 역할 설명</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h3>관심사</h3>
+      <p>#키워드 #키워드 #키워드</p>
+    </section>
+
+    <footer>
+      © 2026 OOO
+    </footer>
+  </div>
+</body>
+</html>
