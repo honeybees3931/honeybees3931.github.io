@@ -7,45 +7,28 @@
   <style>
     body { margin:0; font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif; background:#f4f6f8; color:#222; }
     .container { max-width:800px; margin:0 auto; padding:80px 24px; }
-
-    /* Header */
-    header { padding-bottom:32px; margin-bottom:48px; border-bottom:1px solid #e5e7eb; }
-    h1 { font-size:2.6rem; margin-bottom:0.5rem; }
+    header { padding-bottom:32px; margin-bottom:48px; border-bottom:1px solid #e5e7eb; display:flex; align-items:center; gap:20px; }
+    h1 { font-size:2.4rem; margin-bottom:0.5rem; }
     h2 { font-weight:400; color:#666; margin-bottom:0; }
-
-    /* Section titles */
     h3 { margin-bottom:1.5rem; font-size:1.4rem; position:relative; padding-left:14px; }
     h3::before { content:''; position:absolute; left:0; top:4px; width:5px; height:1.2em; background:#222; border-radius:3px; }
-
     section { margin-bottom:3.5rem; }
     .card { background:#fff; border-radius:18px; padding:28px; box-shadow:0 12px 30px rgba(0,0,0,0.06); }
-
-    /* Layout */
     .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
-
-    /* Buttons */
     button { padding:12px; border-radius:12px; border:none; background:#eee; cursor:pointer; transition:all 0.2s ease; }
     button:hover { background:#ddd; transform:translateY(-1px); }
     button.active { background:#222; color:#fff; }
-
-    /* Content box */
-    .content-box { margin-top:18px; padding:20px; background:#f9f9f9; border-radius:14px; display:none; line-height:1.6; opacity:0; transform:translateY(-6px); transition:all 0.25s ease; }
-    .content-box.show { display:block; opacity:1; transform:translateY(0); }
-
-    /* Tags */
+    .content-box { margin-top:18px; padding:20px; background:#f9f9f9; border-radius:14px; display:none; line-height:1.6; }
+    .content-box.show { display:block; }
     .tag { display:inline-block; background:#e0e0e0; padding:4px 8px; border-radius:8px; font-size:0.8rem; margin-right:6px; margin-top:6px; }
-
-    /* Projects */
-    .project { padding:14px 16px; border-radius:12px; background:#fafafa; border:1px solid #e5e7eb; margin-bottom:12px; cursor:pointer; transition:background 0.2s ease; }
-    .project:hover { background:#f0f0f0; }
+    .project { padding:14px 16px; border-radius:12px; background:#fafafa; border:1px solid #e5e7eb; margin-bottom:12px; cursor:pointer; }
     .project.hidden { display:none; }
-
     footer { text-align:center; color:#888; margin-top:4rem; font-size:0.9rem; }
   </style>
 </head>
 <body>
 <div class="container">
-  <header style="display:flex; align-items:center; gap:20px;">
+  <header>
     <img src="hanyang_logo.png" alt="한양대학교 로고" style="width:72px; height:auto;" />
     <div>
       <h1>Hanyang University<br/>Department of Electronic Engineering</h1>
@@ -53,7 +36,6 @@
     </div>
   </header>
 
-  <!-- 전공 -->
   <section class="card">
     <h3>전공 과목</h3>
     <div class="grid" id="year-buttons" style="margin-bottom:28px;">
@@ -65,20 +47,16 @@
     <div id="subject-content" class="content-box"></div>
   </section>
 
-  
-
-  <!-- 프로젝트 -->
   <section class="card">
     <h3>프로젝트 (과목 연계)</h3>
     <div id="projects"></div>
     <div id="project-detail" class="content-box"></div>
   </section>
 
-  <!-- 동아리 -->
   <section class="card">
     <h3>동아리 활동</h3>
     <p><strong>중앙 동아리 클래식 기타 동아리</strong></p>
-    <p>부회장으로 활동하며 정기 연습 및 공연 기획, 신입 부원 교육과 동아리 운영을 담당했습니다. 음악 활동을 통해 꾸준함과 팀워크, 리더십을 기를 수 있었습니다.</p>
+    <p>부회장으로 활동하며 정기 연습 및 공연 기획, 신입 부원 교육과 동아리 운영을 담당했습니다.</p>
   </section>
 
   <footer>© 2026 이승민</footer>
@@ -87,106 +65,124 @@
 <script>
 const data = {
   y2: {
-    '회로이론': { desc:'저항·커패시터·인덕터 기반 회로 해석과 기본 회로 해법을 학습', project:null },
-    '전자기학': { desc:'전기장과 자기장, 맥스웰 방정식을 중심으로 전자기 현상을 이해', project:null },
-    '논리회로': { desc:'불 대수 기반의 조합논리·순차논리 회로 설계 능력 습득', project:null },
-    '공학수학': { desc:'미분방정식, 라플라스 변환 등 전자공학 수학적 기초 정립', project:null },
-    '프로그래밍기초': { desc:'C 언어를 활용한 공학 문제 해결 및 알고리즘 기초', project:'mcu' },
-    '신호와시스템': { desc:'연속·이산 신호 및 시스템의 시간/주파수 영역 해석', project:'fft' },
-    '반도체소자': { desc:'다이오드, MOSFET 등 반도체 소자의 물리적 동작 원리 이해', project:null },
-    '융합전자설계입문': { desc:'기초 전자 시스템을 설계하며 HW/SW 통합 경험', project:'mcu' }
+    '회로이론': '<strong>학습 내용</strong><br/>직류·교류 회로에서 저항, 커패시터, 인덕터의 동작을 분석하고 키르히호프 법칙을 활용한 회로 해석 방법을 학습했습니다.<br/><br/><strong>배운 점</strong><br/>회로를 수식으로 모델링하고 물리적 의미를 연결하는 기초 역량을 쌓았습니다.',
+    '전자기학': '<strong>학습 내용</strong><br/>전기장·자기장 개념과 맥스웰 방정식을 통해 전자기 현상을 수학적으로 이해했습니다.<br/><br/><strong>배운 점</strong><br/>전자기 이론이 안테나, 통신, 반도체로 확장되는 기반임을 이해했습니다.',
+    '논리회로': '<strong>학습 내용</strong><br/>조합논리 및 순차논리 회로를 설계하고 플립플롭과 레지스터 동작을 학습했습니다.<br/><br/><strong>배운 점</strong><br/>하드웨어 설계의 논리적 사고 방식을 익혔습니다.',
+    '공학수학': '<strong>학습 내용</strong><br/>미분방정식, 라플라스 변환 등 전자공학 문제 해결을 위한 수학적 도구를 학습했습니다.<br/><br/><strong>배운 점</strong><br/>수식이 실제 시스템 해석에 어떻게 적용되는지 이해했습니다.',
+    '프로그래밍기초': '<strong>학습 내용</strong><br/>C 언어를 활용한 변수, 제어문, 함수 개념과 공학 문제 해결을 위한 프로그래밍을 수행했습니다.<br/><br/><strong>배운 점</strong><br/>논리적 사고와 디버깅 능력을 기를 수 있었습니다.',
+    '신호와시스템': '<strong>학습 내용</strong><br/>연속·이산 신호와 시스템의 특성, 컨볼루션과 주파수 해석을 학습했습니다.<br/><br/><strong>배운 점</strong><br/>신호를 수학적으로 해석하는 관점을 확립했습니다.',
+    '반도체소자': '<strong>학습 내용</strong><br/>PN 접합, 다이오드, MOSFET의 동작 원리와 특성을 이해했습니다.<br/><br/><strong>배운 점</strong><br/>반도체 소자가 회로 수준에서 어떻게 활용되는지 파악했습니다.',
+    '융합전자설계입문': '<strong>학습 내용</strong><br/>기초 회로 및 시스템 설계를 통해 전자공학 전반을 종합적으로 경험했습니다.<br/><br/><strong>배운 점</strong><br/>이론과 실습을 연결하는 설계 흐름을 익혔습니다.'
   },
   y3: {
-    '전자회로': { desc:'아날로그 증폭기 및 회로 해석과 설계', project:null },
-    '디지털신호처리': { desc:'FFT, 필터 설계를 통한 신호 처리 기법 학습', project:'fft' },
-    '마이크로프로세서': { desc:'MCU 구조 이해 및 펌웨어 기반 제어 구현', project:'mcu' },
-    '통신시스템': { desc:'아날로그 및 디지털 통신 시스템의 기본 원리', project:null },
-    '반도체공학': { desc:'반도체 공정 및 집적회로 제조 기술 이해', project:null },
-    '랜덤프로세스': { desc:'확률 변수와 잡음 모델을 통한 시스템 분석', project:null },
-    '전자기학응용': { desc:'전자기 이론의 실제 공학 문제 적용', project:null },
-    '컴퓨터구조': { desc:'CPU, 메모리, 명령어 처리 구조 이해', project:null }
+    '전자회로': '<strong>학습 내용</strong><br/>증폭기와 아날로그 회로의 동작 원리를 분석했습니다.<br/><br/><strong>배운 점</strong><br/>소자 특성이 회로 성능에 미치는 영향을 이해했습니다.',
+    '디지털신호처리': '<strong>학습 내용</strong><br/>FFT, 필터 설계 등 디지털 신호 처리 기법을 학습했습니다.<br/><br/><strong>배운 점</strong><br/>신호 분석 및 처리 능력을 강화했습니다.',
+    '마이크로프로세서': '<strong>학습 내용</strong><br/>MCU 구조와 레지스터, 인터럽트 기반 제어를 학습했습니다.<br/><br/><strong>배운 점</strong><br/>하드웨어와 소프트웨어의 결합 구조를 이해했습니다.',
+    '통신시스템': '<strong>학습 내용</strong><br/>아날로그 및 디지털 통신 이론을 학습했습니다.<br/><br/><strong>배운 점</strong><br/>신호 전송 과정의 핵심 원리를 파악했습니다.',
+    '반도체공학': '<strong>학습 내용</strong><br/>반도체 공정과 소자 제작 흐름을 학습했습니다.<br/><br/><strong>배운 점</strong><br/>소자 물리와 공정의 연관성을 이해했습니다.',
+    '랜덤프로세스': '<strong>학습 내용</strong><br/>확률 변수와 잡음 모델을 학습했습니다.<br/><br/><strong>배운 점</strong><br/>통계적 사고로 신호를 해석하는 능력을 기렀습니다.',
+    '전자기학응용': '<strong>학습 내용</strong><br/>전자기 이론의 실제 응용 사례를 분석했습니다.<br/><br/><strong>배운 점</strong><br/>이론과 실제 시스템의 연결을 이해했습니다.',
+    '컴퓨터구조': '<strong>학습 내용</strong><br/>CPU 내부 구조와 동작 방식을 학습했습니다.<br/><br/><strong>배운 점</strong><br/>하드웨어 기반 연산 구조를 이해했습니다.'
   },
   y4: {
-    '제어공학': { desc:'PID 제어 및 안정도 분석을 통한 시스템 제어', project:'pid' },
-    '임베디드시스템': { desc:'HW/SW 통합 임베디드 시스템 설계', project:'mcu' },
-    'VLSI공학': { desc:'집적회로 설계 흐름과 레이아웃 이해', project:null },
-    '아날로그회로설계': { desc:'고성능 아날로그 회로 설계 기법 학습', project:null },
-    '디지털통신': { desc:'변조 방식과 채널 특성 분석', project:null },
-    '광전자공학': { desc:'광소자 및 광통신 응용 이해', project:null },
-    '캡스톤디자인': { desc:'팀 기반 종합 시스템 설계 프로젝트 수행', project:'capstone' },
-    '졸업프로젝트': { desc:'전자공학 전공 지식을 집약한 최종 프로젝트', project:'capstone' }
+    '제어공학': '<strong>학습 내용</strong><br/>PID 제어와 시스템 안정도 분석을 학습했습니다.<br/><br/><strong>배운 점</strong><br/>동적 시스템을 설계 관점에서 바라보게 되었습니다.',
+    '임베디드시스템': '<strong>학습 내용</strong><br/>임베디드 시스템 통합 설계를 수행했습니다.<br/><br/><strong>배운 점</strong><br/>시스템 레벨 설계 경험을 쌓았습니다.',
+    'VLSI공학': '<strong>학습 내용</strong><br/>집적회로 설계 기초를 학습했습니다.<br/><br/><strong>배운 점</strong><br/>회로 집적 관점을 이해했습니다.',
+    '아날로그회로설계': '<strong>학습 내용</strong><br/>아날로그 회로 설계 기법을 심화 학습했습니다.<br/><br/><strong>배운 점</strong><br/>설계 시 고려 요소를 체계화했습니다.',
+    '디지털통신': '<strong>학습 내용</strong><br/>디지털 통신 방식과 성능 분석을 학습했습니다.<br/><br/><strong>배운 점</strong><br/>통신 시스템 설계 관점을 확보했습니다.',
+    '광전자공학': '<strong>학습 내용</strong><br/>광소자의 동작 원리와 응용을 학습했습니다.<br/><br/><strong>배운 점</strong><br/>전자공학의 확장 분야를 이해했습니다.',
+    '캡스톤디자인': '<strong>학습 내용</strong><br/>팀 프로젝트를 통해 종합 설계를 수행했습니다.<br/><br/><strong>배운 점</strong><br/>협업과 문제 해결 능력을 강화했습니다.',
+    '졸업프로젝트': '<strong>학습 내용</strong><br/>전공 지식을 종합한 최종 프로젝트를 수행했습니다.<br/><br/><strong>배운 점</strong><br/>자기 주도적 설계 경험을 완성했습니다.'
   }
 };
 
 const projects = {
-  fft: {
-    title:'FFT 기반 소리 분석 (2학년)',
-    detail:'마이크 입력 신호를 FFT로 변환하여 주파수 성분을 분석하고, 소리별 스펙트럼 차이를 시각적으로 비교했습니다.',
-    tags:['신호와시스템','DSP','MATLAB']
-  },
   mcu: {
-    title:'MCU 센서 제어 시스템 (2학년)',
-    detail:'Arduino/STM32 기반으로 온도·조도 센서를 읽고 조건에 따라 LED 및 액추에이터를 제어하는 시스템을 구현했습니다.',
-    tags:['임베디드','MCU','C']
+    title: 'MCU 센서 제어 시스템 (2학년)',
+    detail: `
+      <strong>개요</strong><br/>
+      온도·조도 센서를 MCU로 읽어 환경 조건에 따라 LED와 액추에이터를 제어하는 임베디드 시스템을 구현했습니다.<br/><br/>
+      <strong>역할</strong><br/>
+      회로 구성, 센서 인터페이스 설계, C 기반 펌웨어 작성 및 디버깅을 담당했습니다.<br/><br/>
+      <strong>기술</strong><br/>
+      MCU(Arduino/STM32), GPIO, ADC, 타이머 인터럽트, 상태 머신 설계<br/><br/>
+      <strong>문제 해결</strong><br/>
+      센서 노이즈로 인한 값 변동 문제를 이동 평균 필터로 완화하고, blocking delay를 제거하여 시스템 응답성을 개선했습니다.<br/><br/>
+      <strong>결과</strong><br/>
+      안정적인 센서 기반 제어 동작을 구현했으며, 모듈화된 코드 구조로 확장 가능성을 확보했습니다.
+    `,
+    tags: ['임베디드','MCU','C','센서','상태머신']
   },
   filter: {
-    title:'디지털 필터 설계 (3학년)',
-    detail:'FIR/IIR 필터를 설계하고 주파수 응답을 비교 분석하여 신호 특성에 따른 필터 효과를 확인했습니다.',
-    tags:['DSP','필터','MATLAB']
-  },
-  cpu: {
-    title:'간단한 CPU / ALU 설계 (3학년)',
-    detail:'Logisim을 이용해 ALU와 레지스터를 포함한 간단한 CPU 구조를 설계하고 기본 명령을 시뮬레이션했습니다.',
-    tags:['논리회로','컴퓨터구조','Logisim']
+    title: '디지털 필터 설계 (3학년)',
+    detail: `
+      <strong>개요</strong><br/>
+      FIR 및 IIR 디지털 필터를 설계하고 주파수 응답과 위상 특성을 비교 분석했습니다.<br/><br/>
+      <strong>역할</strong><br/>
+      필터 사양 정의, MATLAB 기반 설계 및 시뮬레이션, 결과 분석을 수행했습니다.<br/><br/>
+      <strong>기술</strong><br/>
+      MATLAB, FFT, FIR/IIR 필터 설계, 주파수 응답 분석<br/><br/>
+      <strong>문제 해결</strong><br/>
+      필터 차수 증가에 따른 계산 복잡도를 고려하여 요구 성능을 만족하는 최소 차수를 도출했습니다.<br/><br/>
+      <strong>결과</strong><br/>
+      신호 특성에 따른 필터 선택 기준을 정립하고 실제 신호 처리 문제에 적용 가능한 설계 경험을 쌓았습니다.
+    `,
+    tags: ['DSP','필터','MATLAB','FFT']
   },
   pid: {
-    title:'PID 제어 시뮬레이션 (4학년)',
-    detail:'PID 파라미터 변화에 따른 시스템 응답을 분석하여 안정도와 응답 특성을 비교했습니다.',
-    tags:['제어공학','PID','MATLAB']
-  },
-  embedded: {
-    title:'임베디드 통합 시스템 (4학년)',
-    detail:'MCU, 센서, 제어 로직을 통합한 임베디드 시스템을 설계하고 단계적으로 기능을 확장했습니다.',
-    tags:['임베디드','시스템','프로젝트']
+    title: 'PID 제어 시뮬레이션 (4학년)',
+    detail: `
+      <strong>개요</strong><br/>
+      PID 제어기의 파라미터 변화에 따른 시스템 응답 특성을 시뮬레이션으로 분석했습니다.<br/><br/>
+      <strong>역할</strong><br/>
+      시스템 모델링, 파라미터 튜닝, 응답 비교 및 안정도 평가를 수행했습니다.<br/><br/>
+      <strong>기술</strong><br/>
+      MATLAB/Simulink, PID 제어, 시간 응답 및 안정도 분석<br/><br/>
+      <strong>문제 해결</strong><br/>
+      오버슈트와 정착 시간 간 트레이드오프를 고려하여 제어 목적에 적합한 파라미터를 도출했습니다.<br/><br/>
+      <strong>결과</strong><br/>
+      제어 목표에 따른 설계 의사결정 과정을 체계화하고 실제 시스템 적용 가능성을 검증했습니다.
+    `,
+    tags: ['제어공학','PID','MATLAB','시뮬레이션']
   }
 };
 
-function renderProjects(filterKey=null){
-  const box=document.getElementById('projects');
-  box.innerHTML='';
-  Object.entries(projects).forEach(([k,v])=>{
-    const d=document.createElement('div');
-    d.className='project'+(filterKey&&k!==filterKey?' hidden':'');
-    d.innerHTML=`<strong>${v.title}</strong><br/><span class='tag'>${v.tags.join('</span><span class="tag">')}</span>`;
-    d.onclick=()=>showProject(v);
-    box.appendChild(d);
-  });
-}
-
-function showProject(p){
-  const d=document.getElementById('project-detail');
-  d.innerHTML=`<strong>${p.title}</strong><br/><br/>${p.detail}`;
-  d.classList.add('show');
-}
-
-window.selectYear=function(y,btn){
+function selectYear(y, btn){
   document.querySelectorAll('#year-buttons button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  const sb=document.getElementById('subject-buttons'); sb.innerHTML='';
+  const sb=document.getElementById('subject-buttons');
+  sb.innerHTML='';
   Object.keys(data[y]).forEach(s=>{
-    const b=document.createElement('button'); b.innerText=s;
+    const b=document.createElement('button');
+    b.innerText=s;
     b.onclick=()=>showSubject(y,s,b);
     sb.appendChild(b);
   });
-};
+}
 
-window.showSubject=function(y,s,btn){
+function showSubject(y,s,btn){
   document.querySelectorAll('#subject-buttons button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   const c=document.getElementById('subject-content');
-  c.innerHTML=data[y][s].desc; c.classList.add('show');
-  renderProjects(data[y][s].project);
-};
+  c.innerHTML=data[y][s];
+  c.classList.add('show');
+}
+
+function renderProjects(){
+  const box=document.getElementById('projects');
+  box.innerHTML='';
+  Object.values(projects).forEach(p=>{
+    const d=document.createElement('div');
+    d.className='project';
+    d.innerHTML='<strong>'+p.title+'</strong><br/>' + p.tags.map(t=>'<span class="tag">'+t+'</span>').join('');
+    d.onclick=()=>{
+      const pd=document.getElementById('project-detail');
+      pd.innerHTML=p.detail;
+      pd.classList.add('show');
+    };
+    box.appendChild(d);
+  });
+}
 
 renderProjects();
 </script>
